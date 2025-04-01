@@ -92,7 +92,7 @@ spec:
     storageClusterRef:
       name: ocs-storagecluster
       namespace: openshift-storage
-  schedulingInterval: 5m
+  schedulingInterval: 1m
   type: async
 EOF
 ```
