@@ -77,7 +77,7 @@ EOF
 
 ===
 ```bash
-$ cat << EOF | oc create -f -
+$ cat << EOF | oc apply -f -
 apiVersion: ramendr.openshift.io/v1alpha1
 kind: MirrorPeer
 metadata:
