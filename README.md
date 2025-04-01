@@ -19,9 +19,9 @@ kind: DRCluster
 metadata:
   name: aws1
 spec:
-  region: us-west-1
+  region: eu-west-1
   s3ProfileName: ""
-  clusterFence: False
+  clusterFence: "Unfenced"
   cidrs:
     - 0.0.0.0/0
 EOF
@@ -36,7 +36,7 @@ metadata:
 spec
   region: westeurope
   s3ProfileName: ""
-  clusterFence: False
+  clusterFence: "Unfenced"
   cidrs:
     - 0.0.0.0/0
 EOF
