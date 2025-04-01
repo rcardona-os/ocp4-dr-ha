@@ -77,6 +77,7 @@ EOF
 
 ===
 ```bash
+$ cat << EOF | oc create -f -
 apiVersion: ramendr.openshift.io/v1alpha1
 kind: MirrorPeer
 metadata:
@@ -93,4 +94,5 @@ spec:
       namespace: openshift-storage
   schedulingInterval: 5m
   type: async
+EOF
 ```
