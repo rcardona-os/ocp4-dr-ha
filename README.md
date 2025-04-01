@@ -24,7 +24,7 @@ spec:
   clusterFence: False
   cidrs:
     - 0.0.0.0/0
-EOD
+EO
 ```
 
 ```bash
@@ -39,4 +39,5 @@ spec:
   clusterFence: False
   cidrs:
     - 0.0.0.0/0
+EOF
 ```
