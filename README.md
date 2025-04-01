@@ -5,30 +5,16 @@
 - check that local cñuster is running
 - install odf mch operator
 
-
-
-```bash
-$ cat << EOF | oc --kubeconfig=inst/auth/kubeconfig create -f -
-apiVersion: ramendr.openshift.io/v1alpha1
-kind: DRPolicy
-metadata:
-  name: app-ha-drpolicy
-spec:
-  drClusters:
-    - aws1
-    - az2
-  schedulingInterval: 1m
-EOF
-```
+- create dr cluster on aws-base
 
 ```bash
-$ cat << EOF | oc --kubeconfig=inst/auth/kubeconfig create -f -
+$ cat << EOF | oc apply -f -
 apiVersion: ramendr.openshift.io/v1alpha1
 kind: DRCluster
 metadata:
-  name: aws1
+  name: aws-base
 spec:
-  region: eu-west-1
+  region: us-west-1
   s3ProfileName: ""
   clusterFence: "Unfenced"
   cidrs:
@@ -36,6 +22,20 @@ spec:
 EOF
 ```
 
+```bash
+$ cat << EOF | oc apply -f -
+apiVersion: ramendr.openshift.io/v1alpha1
+kind: DRCluster
+metadata:
+  name: azure-base
+spec:
+  region: westeurope
+  s3ProfileName: ""
+  clusterFence: "Unfenced"
+  cidrs:
+    - 0.0.0.0/0
+```
+===
 ```bash
 $ cat << EOF | oc --kubeconfig=inst/auth/kubeconfig create -f -
 apiVersion: ramendr.openshift.io/v1alpha1
