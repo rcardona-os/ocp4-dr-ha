@@ -34,7 +34,10 @@ spec:
   clusterFence: "Unfenced"
   cidrs:
     - 0.0.0.0/0
+EOF
 ```
+
+
 ===
 ```bash
 $ cat << EOF | oc --kubeconfig=inst/auth/kubeconfig create -f -
