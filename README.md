@@ -41,3 +41,26 @@ spec:
     - 0.0.0.0/0
 EOF
 ```
+
+
+
+```bash
+$ cat << EOF | oc --kubeconfig=inst/auth/kubeconfig create -f -
+apiVersion: ramendr.openshift.io/v1alpha1
+kind: DRPlacementControl
+metadata:
+  name: image-uploader-drpc
+  namespace: ha-demo
+spec:
+  drPolicyRef:
+    name: app-ha-drpolicy
+  preferredCluster: aws1
+  placementRef:
+    kind: Placement
+    name: image-uploader-placement
+    apiVersion: cluster.open-cluster-management.io/v1beta1
+  pvcSelector:
+    matchLabels:
+      app: image-uploader
+EOF
+```
