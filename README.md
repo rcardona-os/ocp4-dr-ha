@@ -1,3 +1,12 @@
+- install odf operator (aws-base)
+- create odf cluster (aws-base)
+- install acm operator (aws-base)
+- create hub cluster instance (aws-base)
+- check that local cñuster is running
+- install odf mch operator
+
+
+
 ```bash
 $ cat << EOF | oc --kubeconfig=inst/auth/kubeconfig create -f -
 apiVersion: ramendr.openshift.io/v1alpha1
@@ -63,4 +72,25 @@ spec:
     matchLabels:
       app: image-uploader
 EOF
+```
+
+
+===
+```bash
+apiVersion: ramendr.openshift.io/v1alpha1
+kind: MirrorPeer
+metadata:
+  name: odf-mirrorpeer
+spec:
+  items:
+  - clusterName: aws-base
+    storageClusterRef:
+      name: ocs-storagecluster
+      namespace: openshift-storage
+  - clusterName: azure-base
+    storageClusterRef:
+      name: ocs-storagecluster
+      namespace: openshift-storage
+  schedulingInterval: 5m
+  type: async
 ```
