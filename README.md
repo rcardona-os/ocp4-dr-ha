@@ -24,7 +24,7 @@ spec:
   clusterFence: False
   cidrs:
     - 0.0.0.0/0
-EO
+EOF
 ```
 
 ```bash
@@ -33,7 +33,7 @@ apiVersion: ramendr.openshift.io/v1alpha1
 kind: DRCluster
 metadata:
   name: az2
-spec:
+spec
   region: westeurope
   s3ProfileName: ""
   clusterFence: False
