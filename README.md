@@ -78,7 +78,7 @@ EOF
 ===
 ```bash
 $ cat << EOF | oc apply -f -
-apiVersion: ramendr.openshift.io/v1alpha1
+apiVersion: multicluster.odf.openshift.io/v1alpha1
 kind: MirrorPeer
 metadata:
   name: odf-mirrorpeer
