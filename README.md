@@ -39,18 +39,20 @@ EOF
 
 
 ===
+
+- policy
+ 
 ```bash
-$ cat << EOF | oc --kubeconfig=inst/auth/kubeconfig create -f -
+$ cat << EOF | oc apply -f -
 apiVersion: ramendr.openshift.io/v1alpha1
-kind: DRCluster
+kind: DRPolicy
 metadata:
-  name: az2
+  name: app-ha-drpolicy
 spec:
-  region: westeurope
-  s3ProfileName: ""
-  clusterFence: "Unfenced"
-  cidrs:
-    - 0.0.0.0/0
+  drClusters:
+    - aws-base
+    - azure-base
+  schedulingInterval: 1m
 EOF
 ```
 
