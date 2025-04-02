@@ -154,6 +154,7 @@ following
 
 # -----------------------------------------------------------------------------
 # 1️⃣  Create MirrorPeer (On the hub cluster: gcp-base)
+```bash
 cat <<EOF | oc apply -f -
 apiVersion: multicluster.odf.openshift.io/v1alpha1
 kind: MirrorPeer
@@ -172,14 +173,16 @@ spec:
   schedulingInterval: 5m
   type: async
 EOF
-
+```
 # Check status:
+```bash
 oc get mirrorpeer odf-mirrorpeer -o jsonpath='{.status.phase}{"\n"}'
-
+```
 # -----------------------------------------------------------------------------
 # 2️⃣  Create DRCluster objects (On the hub cluster: gcp-base)
 
 ## aws-base
+```bash
 cat <<EOF | oc apply -f -
 apiVersion: ramendr.openshift.io/v1alpha1
 kind: DRCluster
@@ -192,8 +195,9 @@ spec:
   cidrs:
     - 0.0.0.0/0
 EOF
-
+```
 ## azure-base
+```bash
 cat <<EOF | oc apply -f -
 apiVersion: ramendr.openshift.io/v1alpha1
 kind: DRCluster
@@ -206,13 +210,18 @@ spec:
   cidrs:
     - 0.0.0.0/0
 EOF
-
+```
 # Validate status:
+```bash
 oc get drcluster aws-base -o json | jq -r '.status.conditions[] | select(.type=="Validated")'
+```
+```bash
 oc get drcluster azure-base -o json | jq -r '.status.conditions[] | select(.type=="Validated")'
+```
 
 # -----------------------------------------------------------------------------
 # 3️⃣  Create DRPolicy (On the hub cluster: gcp-base)
+```bash
 cat <<EOF | oc apply -f -
 apiVersion: ramendr.openshift.io/v1alpha1
 kind: DRPolicy
@@ -227,9 +236,11 @@ spec:
     matchLabels:
       replication-class: async
 EOF
-
+```
 # Check DRPolicy validation:
+```bash
 oc get drpolicy app-ha-drpolicy -o yaml | grep -A6 "type: Validated"
+```
 
 # -----------------------------------------------------------------------------
 # ✅ At this point, DR framework is ready.
