@@ -249,7 +249,7 @@ oc get drpolicy app-ha-drpolicy -o yaml | grep -A6 "type: Validated"
 ===
 real 23
 
-(gcp)
+(hub)
 ```bash
 cat <<EOF | oc apply -f -
 apiVersion: multicluster.odf.openshift.io/v1alpha1
@@ -268,6 +268,7 @@ spec:
       namespace: openshift-storage
 EOF
 ```
+
 (spokes)
 ```bash
 cat <<EOF | oc apply -f -
@@ -285,3 +286,31 @@ reclaimPolicy: Delete
 EOF
 ```
 
+(hub)
+```bash
+cat <<EOF | oc apply -f -
+apiVersion: ramendr.openshift.io/v1alpha1
+kind: DRPolicy
+metadata:
+  name: aws-azure-drpolicy
+spec:
+  schedulingInterval: 5m
+  replicationClassSelector:
+    matchLabels:
+      ramendr.openshift.io/replication-class: "true"
+EOF
+```
+
+(spokes)
+```bash
+cat <<EOF | oc apply -f -
+apiVersion: replication.storage.openshift.io/v1alpha1
+kind: VolumeReplicationClass
+metadata:
+  name: vrc-5m
+spec:
+  provisioner: openshift-storage.rbd.csi.ceph.com
+  parameters:
+    schedulingInterval: 5m
+EOF
+```
