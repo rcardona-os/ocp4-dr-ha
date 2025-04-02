@@ -249,6 +249,7 @@ oc get drpolicy app-ha-drpolicy -o yaml | grep -A6 "type: Validated"
 ===
 real 23
 
+(gcp)
 ```bash
 cat <<EOF | oc apply -f -
 apiVersion: multicluster.odf.openshift.io/v1alpha1
@@ -267,5 +268,20 @@ spec:
       namespace: openshift-storage
 EOF
 ```
-
+(spokes)
+```bash
+cat <<EOF | oc apply -f -
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ocs-storagecluster-ceph-rbd-mirror
+provisioner: openshift-storage.rbd.csi.ceph.com
+parameters:
+  clusterID: openshift-storage
+  imageFeatures: layering,exclusive-lock,object-map,fast-diff
+  pool: ocs-storagecluster-cephblockpool
+allowVolumeExpansion: true
+reclaimPolicy: Delete
+EOF
+```
 
