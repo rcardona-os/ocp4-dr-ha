@@ -181,7 +181,7 @@ oc get mirrorpeer odf-mirrorpeer -o jsonpath='{.status.phase}{"\n"}'
 #### -----------------------------------------------------------------------------
 #### 2️⃣  Create DRCluster objects (On the hub cluster: gcp-base)
 
-## aws-base
+#### aws-base
 ```bash
 cat <<EOF | oc apply -f -
 apiVersion: ramendr.openshift.io/v1alpha1
