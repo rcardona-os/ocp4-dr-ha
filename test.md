@@ -298,6 +298,9 @@ spec:
   replicationClassSelector:
     matchLabels:
       ramendr.openshift.io/replication-class: "true"
+  drClusters:
+    - aws-base
+    - azure-base
 EOF
 ```
 
@@ -312,8 +315,5 @@ spec:
   provisioner: openshift-storage.rbd.csi.ceph.com
   parameters:
     schedulingInterval: 1m
-  drClusters:
-    - aws-base
-    - azure-base
 EOF
 ```
