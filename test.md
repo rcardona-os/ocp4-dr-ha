@@ -145,15 +145,15 @@ EOF
 ===
 following
 
-# OpenShift Data Foundation Disaster Recovery Setup
+### OpenShift Data Foundation Disaster Recovery Setup
 
-# 🟢 Prerequisites:
-# - ACM (Advanced Cluster Management) installed on the hub cluster (gcp-base)
-# - ODF installed and default StorageClass configured on both aws-base (primary) and azure-base (DR)
-# - VolSync available on both aws-base and azure-base
+### 🟢 Prerequisites:
+### - ACM (Advanced Cluster Management) installed on the hub cluster (gcp-base)
+### - ODF installed and default StorageClass configured on both aws-base (primary) and azure-base (DR)
+### - VolSync available on both aws-base and azure-base
 
-# -----------------------------------------------------------------------------
-# 1️⃣  Create MirrorPeer (On the hub cluster: gcp-base)
+#### -----------------------------------------------------------------------------
+#### 1️⃣  Create MirrorPeer (On the hub cluster: gcp-base)
 ```bash
 cat <<EOF | oc apply -f -
 apiVersion: multicluster.odf.openshift.io/v1alpha1
@@ -174,12 +174,12 @@ spec:
   type: async
 EOF
 ```
-# Check status:
+#### Check status:
 ```bash
 oc get mirrorpeer odf-mirrorpeer -o jsonpath='{.status.phase}{"\n"}'
 ```
-# -----------------------------------------------------------------------------
-# 2️⃣  Create DRCluster objects (On the hub cluster: gcp-base)
+#### -----------------------------------------------------------------------------
+#### 2️⃣  Create DRCluster objects (On the hub cluster: gcp-base)
 
 ## aws-base
 ```bash
@@ -196,7 +196,7 @@ spec:
     - 0.0.0.0/0
 EOF
 ```
-## azure-base
+#### azure-base
 ```bash
 cat <<EOF | oc apply -f -
 apiVersion: ramendr.openshift.io/v1alpha1
@@ -211,7 +211,7 @@ spec:
     - 0.0.0.0/0
 EOF
 ```
-# Validate status:
+#### Validate status:
 ```bash
 oc get drcluster aws-base -o json | jq -r '.status.conditions[] | select(.type=="Validated")'
 ```
@@ -219,8 +219,8 @@ oc get drcluster aws-base -o json | jq -r '.status.conditions[] | select(.type==
 oc get drcluster azure-base -o json | jq -r '.status.conditions[] | select(.type=="Validated")'
 ```
 
-# -----------------------------------------------------------------------------
-# 3️⃣  Create DRPolicy (On the hub cluster: gcp-base)
+#### -----------------------------------------------------------------------------
+#### 3️⃣  Create DRPolicy (On the hub cluster: gcp-base)
 ```bash
 cat <<EOF | oc apply -f -
 apiVersion: ramendr.openshift.io/v1alpha1
@@ -237,12 +237,12 @@ spec:
       replication-class: async
 EOF
 ```
-# Check DRPolicy validation:
+#### Check DRPolicy validation:
 ```bash
 oc get drpolicy app-ha-drpolicy -o yaml | grep -A6 "type: Validated"
 ```
 
-# -----------------------------------------------------------------------------
-# ✅ At this point, DR framework is ready.
-# Next steps are app deployment with Placement, DRPC, and VRG.
+### -----------------------------------------------------------------------------
+### ✅ At this point, DR framework is ready.
+### Next steps are app deployment with Placement, DRPC, and VRG.
 
