@@ -312,5 +312,8 @@ spec:
   provisioner: openshift-storage.rbd.csi.ceph.com
   parameters:
     schedulingInterval: 1m
+  drClusters:
+    - aws-base
+    - azure-base
 EOF
 ```
