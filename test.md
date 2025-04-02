@@ -294,7 +294,7 @@ kind: DRPolicy
 metadata:
   name: aws-azure-drpolicy
 spec:
-  schedulingInterval: 5m
+  schedulingInterval: 1m
   replicationClassSelector:
     matchLabels:
       ramendr.openshift.io/replication-class: "true"
@@ -311,6 +311,6 @@ metadata:
 spec:
   provisioner: openshift-storage.rbd.csi.ceph.com
   parameters:
-    schedulingInterval: 5m
+    schedulingInterval: 1m
 EOF
 ```
