@@ -246,3 +246,26 @@ oc get drpolicy app-ha-drpolicy -o yaml | grep -A6 "type: Validated"
 ### ✅ At this point, DR framework is ready.
 ### Next steps are app deployment with Placement, DRPC, and VRG.
 
+===
+real 23
+
+```bash
+cat <<EOF | oc apply -f -
+apiVersion: multicluster.odf.openshift.io/v1alpha1
+kind: MirrorPeer
+metadata:
+  name: mirrorpeer-aws-base-azure-base
+spec:
+  items:
+  - clusterName: aws-base
+    storageClusterRef:
+      name: ocs-storagecluster
+      namespace: openshift-storage
+  - clusterName: azure-base
+    storageClusterRef:
+      name: ocs-storagecluster
+      namespace: openshift-storage
+EOF
+```
+
+
